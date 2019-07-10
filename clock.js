@@ -47,10 +47,46 @@ function getCurrentBinaryTime() {
     return (hours + ":" + minutes + ":" + seconds);
 }
 
+function update_table() {
+    var date = new Date();
+
+    hours = fixedWidthBinary(date.getHours());
+    minutes = fixedWidthBinary(date.getMinutes());
+    seconds = fixedWidthBinary(date.getSeconds());
+
+    var binary_time = [hours, minutes, seconds]
+
+    var tbl = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+
+    var table = document.getElementById("binary_table");
+  
+    table.innerHTML="";
+  
+    for (var i = 0; i < 3; i++) {
+        var row = document.createElement("tr");
+
+        for (var j = 0; j < 6; j++) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(binary_time[i][j]);
+            if(binary_time[i][j] == "1")
+            {
+                cell.classList.add("bg-success");
+            }
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+
+        tblBody.appendChild(row);
+        table.appendChild(tblBody);
+    }
+}
+
 function show_time() {
     document.getElementById("decimal_time").innerHTML = getCurrentTime();
     document.getElementById("title_binary_time").innerHTML = getCurrentBinaryTime();
     document.getElementById("shown_binary_time").innerHTML = getCurrentBinaryTime();
+    update_table();
 }
 
 window.onload = function start() {
